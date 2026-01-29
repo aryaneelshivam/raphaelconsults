@@ -24,7 +24,7 @@ export function Hero() {
                             We provide smooth, cost-effective, and transparent guidance for students from Africa and Asia.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <a href="#company" className="px-8 py-4 text-base font-bold rounded-full text-white bg-accent-500 hover:bg-accent-600 transition shadow-lg shadow-black/20 text-center">
+                            <a href="#contact-form" className="px-8 py-4 text-base font-bold rounded-full text-white bg-accent-500 hover:bg-accent-600 transition shadow-lg shadow-black/20 text-center">
                                 Start Your Journey
                             </a>
                         </div>

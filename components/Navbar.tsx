@@ -23,16 +23,22 @@ export function Navbar() {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-8">
-                        {['Home ❤️', 'Company 🤝', 'Services 💼', 'Destinations 🌍', 'Contact 📞'].map((item) => (
+                        {[
+                            { name: 'Home', id: 'home', icon: '❤️' },
+                            { name: 'Company', id: 'about', icon: '🤝' },
+                            { name: 'Services', id: 'services', icon: '💼' },
+                            { name: 'Destinations', id: 'destinations', icon: '🌍' },
+                            { name: 'Contact', id: 'contact', icon: '📞' }
+                        ].map((item) => (
                             <a
-                                key={item}
-                                href={`#${item.toLowerCase().replace(' ', '')}`}
+                                key={item.name}
+                                href={`#${item.id}`}
                                 className="text-gray-600 hover:text-brand-500 font-semibold text-sm uppercase tracking-wide transition"
                             >
-                                {item}
+                                {item.name} {item.icon}
                             </a>
                         ))}
-                        <a href="#contact" className="bg-accent-500 hover:bg-accent-600 text-white px-6 py-2.5 rounded-full font-bold text-sm transition shadow-lg shadow-accent-500/30">
+                        <a href="https://wa.me/918427226647?text=Hello%2C%20I%20would%20like%20to%20book%20a%20free%20consultation%20for%20studying%20abroad" target="_blank" rel="noopener noreferrer" className="bg-accent-500 hover:bg-accent-600 text-white px-6 py-2.5 rounded-full font-bold text-sm transition shadow-lg shadow-accent-500/30">
                             Book Consultation
                         </a>
                     </div>
@@ -59,17 +65,23 @@ export function Navbar() {
             {isMenuOpen && (
                 <div className="md:hidden bg-white border-t border-gray-100 absolute w-full shadow-xl z-50">
                     <div className="px-4 pt-2 pb-6 space-y-2">
-                        {['Home', 'Company', 'Services', 'Destinations', 'Contact'].map((item) => (
+                        {[
+                            { name: 'Home', id: 'home' },
+                            { name: 'Company', id: 'about' },
+                            { name: 'Services', id: 'services' },
+                            { name: 'Destinations', id: 'destinations' },
+                            { name: 'Contact', id: 'contact' }
+                        ].map((item) => (
                             <a
-                                key={item}
-                                href={`#${item.toLowerCase().replace(' ', '')}`}
+                                key={item.name}
+                                href={`#${item.id}`}
                                 className="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-500"
                                 onClick={() => setIsMenuOpen(false)}
                             >
-                                {item}
+                                {item.name}
                             </a>
                         ))}
-                        <a href="#contact" className="block w-full text-center mt-4 bg-accent-500 text-white py-3 rounded-lg font-bold">
+                        <a href="https://wa.me/918427226647?text=Hello%2C%20I%20would%20like%20to%20book%20a%20free%20consultation%20for%20studying%20abroad" target="_blank" rel="noopener noreferrer" className="block w-full text-center mt-4 bg-accent-500 text-white py-3 rounded-lg font-bold">
                             Book Consultation
                         </a>
                     </div>

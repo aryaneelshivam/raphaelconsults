@@ -3,7 +3,7 @@ import { destinations } from '../data/destinations';
 
 export function DestinationsGrid() {
     return (
-        <section id="destinations" className="py-20 bg-white">
+        <section id="destinations" className="py-12 md:py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl font-bold text-brand-900">Destinations We Cover</h2>
@@ -14,7 +14,13 @@ export function DestinationsGrid() {
                 <div className="relative flex overflow-hidden group">
                     <div className="flex animate-scroll whitespace-nowrap gap-8 py-4 hover:[animation-play-state:paused]">
                         {[...destinations, ...destinations, ...destinations].map((dest, i) => (
-                            <div key={`${dest.id}-${i}`} className="group/card cursor-pointer min-w-[180px] hover:scale-105 transition-transform duration-300">
+                            <div
+                                key={`${dest.id}-${i}`}
+                                onClick={() => {
+                                    document.getElementById('universities')?.scrollIntoView({ behavior: 'smooth' });
+                                }}
+                                className="group/card cursor-pointer min-w-[180px] hover:scale-105 transition-transform duration-300"
+                            >
                                 <div className="relative overflow-hidden rounded-lg aspect-video mb-3 border border-gray-100 shadow-sm group-hover/card:shadow-md">
                                     <img
                                         src={dest.image}

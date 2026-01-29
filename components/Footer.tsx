@@ -3,7 +3,7 @@ import { GlobeIcon } from './Icons';
 
 export function Footer() {
     return (
-        <footer id="contact" className="bg-brand-900 text-gray-300 py-16">
+        <footer id="contact" className="bg-brand-900 text-gray-300 py-12 md:py-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                     <div className="col-span-1 lg:col-span-1">

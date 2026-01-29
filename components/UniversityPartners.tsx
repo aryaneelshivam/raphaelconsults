@@ -2,11 +2,17 @@ import React, { useState } from 'react';
 import { destinations } from '../data/destinations';
 
 export function UniversityPartners() {
-    const [activeTab, setActiveTab] = useState(destinations[0].id);
-    const activeDestination = destinations.find(d => d.id === activeTab) || destinations[0];
+    // Filter destinations that have at least one university listed (either in Details or List)
+    const validDestinations = destinations.filter(d =>
+        (d.universityDetails && d.universityDetails.length > 0) ||
+        (d.universityList && d.universityList.length > 0)
+    );
+
+    const [activeTab, setActiveTab] = useState(validDestinations[0]?.id);
+    const activeDestination = validDestinations.find(d => d.id === activeTab) || validDestinations[0];
 
     return (
-        <section className="py-20 bg-blue-50/50">
+        <section id="universities" className="py-12 md:py-20 bg-blue-50/50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
@@ -15,7 +21,7 @@ export function UniversityPartners() {
 
                     {/* Country Tabs */}
                     <div className="flex flex-wrap justify-center gap-6 mb-12">
-                        {destinations.map((dest) => (
+                        {validDestinations.map((dest) => (
                             <button
                                 key={dest.id}
                                 onClick={() => setActiveTab(dest.id)}
@@ -88,7 +94,12 @@ export function UniversityPartners() {
 
                         {/* "And Many More" Card - Only show for countries with long lists (e.g. UK) */}
                         {activeDestination.universityDetails && activeDestination.universityDetails.length > 10 && (
-                            <div className="bg-gradient-to-br from-brand-500 to-brand-600 rounded-2xl p-6 shadow-sm border border-brand-400 flex flex-col items-center justify-center text-center hover:shadow-md transition-shadow h-full min-h-[100px]">
+                            <div
+                                onClick={() => {
+                                    document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+                                }}
+                                className="bg-gradient-to-br from-brand-500 to-brand-600 rounded-2xl p-6 shadow-sm border border-brand-400 flex flex-col items-center justify-center text-center hover:shadow-md transition-shadow h-full min-h-[100px] cursor-pointer"
+                            >
                                 <h3 className="font-bold text-white text-xl md:text-2xl mb-2">And Many More...</h3>
                                 <p className="text-brand-100 text-sm">Contact us for the full list of our university partners.</p>
                             </div>

@@ -2,7 +2,7 @@ import React from 'react';
 
 export function CompanyStats() {
     return (
-        <section id="company" className="py-16 bg-white relative -mt-10 z-20">
+        <section id="company" className="py-12 md:py-16 bg-white relative mt-4 md:-mt-10 z-20">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="bg-white rounded-2xl shadow-card p-8 md:p-12 border border-brand-100/50">
                     <div className="text-center mb-10">
