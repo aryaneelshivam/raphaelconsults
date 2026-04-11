@@ -5,85 +5,77 @@ export function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <nav className="sticky top-0 z-50 glass shadow-soft transition-all duration-500">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between h-20 items-center">
-                    {/* Logo */}
-                    <div className="flex items-center gap-3">
-                        <div className="bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl p-2.5 shadow-lg shadow-brand-500/20">
-                            <GlobeIcon className="w-7 h-7 text-white" />
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight leading-none">
-                                Raphael<span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-700">Consults</span>
-                            </span>
-                            <span className="text-[10px] md:text-xs text-gray-500 font-medium tracking-wide uppercase">Travel & Educational Consults</span>
-                        </div>
-                    </div>
+        <nav className="fixed top-0 left-0 w-full p-6 md:p-8 flex justify-between items-center z-[5000] mix-blend-difference">
+            {/* Logo */}
+            <div className="font-display text-2xl font-bold uppercase tracking-tighter">
+                Raphael<span className="text-accent">.</span>
+            </div>
 
-                    {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center space-x-8">
-                        {[
-                            { name: 'Home', id: 'home' },
-                            { name: 'Company', id: 'about' },
-                            { name: 'Services', id: 'services' },
-                            { name: 'Destinations', id: 'destinations' },
-                            { name: 'Contact', id: 'contact' }
-                        ].map((item) => (
-                            <a
-                                key={item.name}
-                                href={`#${item.id}`}
-                                className="nav-link text-gray-700 font-semibold text-[13px] uppercase tracking-[0.1em] transition-all duration-300 hover:-translate-y-0.5 inline-block"
-                            >
-                                {item.name}
-                            </a>
-                        ))}
-                        <a href="https://wa.me/918427226647?text=Hello%2C%20I%20would%20like%20to%20book%20a%20free%20consultation%20for%20studying%20abroad" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white px-7 py-2.5 rounded-full font-bold text-sm transition-all duration-300 shadow-lg shadow-accent-500/30 hover:shadow-xl hover:shadow-accent-500/40 hover:-translate-y-0.5 active:translate-y-0">
-                            Book Consultation
-                        </a>
-                    </div>
+            {/* Desktop Menu */}
+            <div className="hidden md:flex gap-8 items-center">
+                {[
+                    { name: 'Home', id: 'home' },
+                    { name: 'Company', id: 'about' },
+                    { name: 'Services', id: 'services' },
+                    { name: 'Destinations', id: 'destinations' },
+                    { name: 'Contact', id: 'contact' }
+                ].map((item) => (
+                    <a
+                        key={item.name}
+                        href={`#${item.id}`}
+                        className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/60 hover:text-white transition-colors duration-300"
+                    >
+                        {item.name}
+                    </a>
+                ))}
+                <a
+                    href="https://wa.me/918427226647?text=Hello%2C%20I%20would%20like%20to%20book%20a%20free%20consultation%20for%20studying%20abroad"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] uppercase tracking-[0.3em] font-bold text-bg bg-accent px-6 py-3 rounded-full hover:bg-accent-light transition-colors duration-300"
+                >
+                    Book Consultation
+                </a>
+            </div>
 
-                    {/* Mobile Menu Button */}
-                    <div className="md:hidden">
-                        <button
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="text-gray-600 hover:text-brand-500 focus:outline-none p-2 transition-colors"
-                        >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                {isMenuOpen ? (
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                ) : (
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                                )}
-                            </svg>
-                        </button>
-                    </div>
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+                <div
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    className="w-10 h-10 rounded-full glass flex items-center justify-center cursor-pointer group"
+                >
+                    <div className={`w-5 h-[2px] bg-white relative transition-all duration-300
+                        before:content-[''] before:absolute before:left-0 before:w-full before:h-full before:bg-white before:transition-all before:duration-300
+                        after:content-[''] after:absolute after:left-0 after:w-full after:h-full after:bg-white after:transition-all after:duration-300
+                        ${isMenuOpen
+                            ? 'rotate-45 before:rotate-90 before:top-0 after:opacity-0'
+                            : 'before:-top-1.5 after:top-1.5 group-hover:scale-x-75'
+                        }`}
+                    />
                 </div>
             </div>
 
             {/* Mobile Menu Dropdown */}
-            <div className={`md:hidden glass absolute w-full shadow-xl z-50 transition-all duration-500 ease-out ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
-                <div className="px-4 pt-2 pb-6 space-y-1">
-                    {[
-                        { name: 'Home', id: 'home' },
-                        { name: 'Company', id: 'about' },
-                        { name: 'Services', id: 'services' },
-                        { name: 'Destinations', id: 'destinations' },
-                        { name: 'Contact', id: 'contact' }
-                    ].map((item) => (
-                        <a
-                            key={item.name}
-                            href={`#${item.id}`}
-                            className="block px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-500 transition-all duration-300"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            {item.name}
-                        </a>
-                    ))}
-                    <a href="https://wa.me/918427226647?text=Hello%2C%20I%20would%20like%20to%20book%20a%20free%20consultation%20for%20studying%20abroad" target="_blank" rel="noopener noreferrer" className="block w-full text-center mt-4 bg-gradient-to-r from-accent-500 to-accent-600 text-white py-3.5 rounded-xl font-bold shadow-lg shadow-accent-500/20">
-                        Book Consultation
+            <div className={`md:hidden fixed inset-0 top-20 bg-bg/95 backdrop-blur-2xl z-[4999] flex flex-col items-center justify-center gap-8 transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+                {[
+                    { name: 'Home', id: 'home' },
+                    { name: 'Company', id: 'about' },
+                    { name: 'Services', id: 'services' },
+                    { name: 'Destinations', id: 'destinations' },
+                    { name: 'Contact', id: 'contact' }
+                ].map((item) => (
+                    <a
+                        key={item.name}
+                        href={`#${item.id}`}
+                        className="font-display text-3xl font-bold uppercase tracking-tight text-white/70 hover:text-accent transition-colors duration-300"
+                        onClick={() => setIsMenuOpen(false)}
+                    >
+                        {item.name}
                     </a>
-                </div>
+                ))}
+                <a href="https://wa.me/918427226647?text=Hello%2C%20I%20would%20like%20to%20book%20a%20free%20consultation%20for%20studying%20abroad" target="_blank" rel="noopener noreferrer" className="mt-4 bg-accent text-bg px-8 py-4 rounded-full font-display font-bold uppercase tracking-widest text-sm">
+                    Book Consultation
+                </a>
             </div>
         </nav>
     );

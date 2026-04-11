@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { destinations } from '../data/destinations';
+import { motion } from 'motion/react';
 
 export function UniversityPartners() {
-    // Filter destinations that have at least one university listed (either in Details or List)
     const validDestinations = destinations.filter(d =>
         (d.universityDetails && d.universityDetails.length > 0) ||
         (d.universityList && d.universityList.length > 0)
@@ -12,145 +12,112 @@ export function UniversityPartners() {
     const activeDestination = validDestinations.find(d => d.id === activeTab) || validDestinations[0];
 
     return (
-        <section id="universities" className="py-16 md:py-24 bg-gradient-to-b from-white to-blue-50/40 relative overflow-hidden">
-            {/* Elegant Background Blurs */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-100/30 blur-3xl opacity-50 mix-blend-multiply"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-100/30 blur-3xl opacity-50 mix-blend-multiply"></div>
-            </div>
-
-            <style>{`
-                @keyframes fadeInUp {
-                    from { opacity: 0; transform: translateY(30px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                .animate-stagger {
-                    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-                    opacity: 0;
-                }
-                .hide-scrollbar::-webkit-scrollbar {
-                    display: none;
-                }
-                .hide-scrollbar {
-                    -ms-overflow-style: none;  /* IE and Edge */
-                    scrollbar-width: none;  /* Firefox */
-                }
-            `}</style>
-
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">
-                        Top Universities to <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-500">Study Abroad</span> 🎓
+        <section id="universities" className="py-32 px-4 relative overflow-hidden">
+            <div className="max-w-7xl mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 80 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: true }}
+                    className="text-center mb-16"
+                >
+                    <span className="text-accent text-[10px] font-bold uppercase tracking-[0.3em] mb-4 block">Partners</span>
+                    <h2 className="font-display text-5xl md:text-7xl font-bold uppercase leading-[0.9] mb-6">
+                        Top Universities to<br /><span className="text-stroke italic font-serif">Study</span>{' '}<span className="text-accent">Abroad</span>
                     </h2>
-                    <p className="text-gray-500 text-lg max-w-2xl mx-auto">
+                    <p className="text-white/40 max-w-2xl mx-auto text-sm uppercase tracking-widest leading-loose">
                         Explore our extensive network of world-renowned partner institutions and find your perfect academic destination.
                     </p>
-                </div>
+                </motion.div>
 
-                {/* Country Tabs - Premium Pill Design */}
-                <div className="flex justify-start md:justify-center gap-3 mb-14 overflow-x-auto pb-4 pt-2 px-2 hide-scrollbar snap-x">
+                {/* Country Tabs */}
+                <div className="flex justify-start md:justify-center gap-3 mb-14 overflow-x-auto pb-4 px-2 hide-scrollbar">
                     {validDestinations.map((dest) => (
                         <button
                             key={dest.id}
                             onClick={() => setActiveTab(dest.id)}
-                            className={`flex items-center gap-2.5 px-6 py-3 rounded-full transition-all duration-400 ease-out snap-center shrink-0 ${activeTab === dest.id
-                                ? 'bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-lg shadow-brand-500/40 ring-2 ring-brand-500 ring-offset-2 scale-105'
-                                : 'bg-white text-gray-600 shadow-sm border border-gray-100 hover:bg-gray-50 hover:border-gray-200 hover:shadow-md'
-                                }`}
+                            className={`flex items-center gap-2.5 px-6 py-3 rounded-full transition-all duration-300 shrink-0 text-sm font-bold uppercase tracking-wider ${
+                                activeTab === dest.id
+                                    ? 'bg-accent text-bg'
+                                    : 'glass text-white/60 hover:text-white hover:bg-white/10'
+                            }`}
                         >
-                            <img
-                                src={dest.image}
-                                alt={dest.country}
-                                className="w-5 h-3.5 object-cover rounded-[2px] shadow-sm"
-                            />
-                            <span className="font-bold text-sm tracking-wide whitespace-nowrap">
-                                {dest.country}
-                            </span>
+                            <img src={dest.image} alt={dest.country} className="w-5 h-3.5 object-cover rounded-[2px]" />
+                            <span className="whitespace-nowrap">{dest.country}</span>
                         </button>
                     ))}
                 </div>
 
-                {/* University Cards Grid */}
-                {/* Use a key wrapper based on activeTab to re-trigger animations seamlessly on tab switch */}
-                <div key={activeTab} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* University Cards */}
+                <div key={activeTab} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {(activeDestination.universityDetails || activeDestination.universityList || [1, 2, 3, 4, 5, 6]).slice(0, 10).map((uni, idx) => {
                         let uniName = "";
                         let location = "";
-                        let courseCount = "";
 
-                        if (typeof uni === 'object' && 'name' in uni) { // University object
+                        if (typeof uni === 'object' && 'name' in uni) {
                             uniName = uni.name;
                             location = uni.location;
-                            courseCount = uni.courseCount;
-                        } else if (typeof uni === 'string') { // String from list
+                        } else if (typeof uni === 'string') {
                             uniName = uni;
                             location = activeDestination.country;
-                            courseCount = "Available";
-                        } else { // Placeholder number
+                        } else {
                             uniName = `University of ${activeDestination.country} ${idx + 1}`;
                             location = `${['London', 'Manchester', 'Birmingham', 'Liverpool', 'Leeds', 'Bristol'][idx % 6]}, ${activeDestination.country}`;
-                            courseCount = ['400+', '350+', '500+', '230+', '150+', '450+'][idx % 6];
                         }
 
                         const formattedName = uniName.replace(/ /g, '_').toLowerCase();
                         const localLogoSrc = `/images/logos/${formattedName}.png`;
-                        const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(uniName)}&background=random&color=fff&size=128&bold=true`;
+                        const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(uniName)}&background=111111&color=ff4e00&size=128&bold=true`;
 
                         return (
-                            <div
+                            <motion.div
                                 key={idx}
-                                style={{ animationDelay: `${idx * 75}ms` }}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.4, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
                                 onClick={() => {
                                     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
                                 }}
-                                className="animate-stagger bg-white/80 backdrop-blur-sm rounded-2xl p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-gray-100/80 flex items-center gap-5 hover:-translate-y-1.5 hover:shadow-[0_12px_30px_-10px_rgba(0,0,0,0.08)] hover:border-brand-200 transition-all duration-400 ease-out cursor-pointer group relative overflow-hidden"
+                                className="glass rounded-2xl p-5 flex items-center gap-5 hover:-translate-y-1 hover:bg-white/10 transition-all duration-300 cursor-pointer group"
                             >
-                                {/* Soft gradient hover effect background */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-brand-50/0 to-brand-50/0 group-hover:from-white group-hover:to-brand-50/50 transition-colors duration-400 ease-out -z-10"></div>
-                                
-                                <div className="w-16 h-16 shrink-0 bg-white rounded-xl border border-gray-100/50 p-1.5 flex items-center justify-center overflow-hidden shadow-sm group-hover:scale-110 group-hover:shadow-md transition-transform duration-400 ease-out">
+                                <div className="w-14 h-14 shrink-0 bg-bg-elevated rounded-xl border border-white/10 p-1.5 flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300">
                                     <img
                                         src={localLogoSrc}
                                         alt={uniName}
-                                        className="w-full h-full object-contain rounded-lg transition-opacity duration-300"
-                                        onError={(e) => {
-                                            e.currentTarget.src = fallbackAvatar;
-                                        }}
+                                        className="w-full h-full object-contain rounded-lg"
+                                        onError={(e) => { e.currentTarget.src = fallbackAvatar; }}
                                     />
                                 </div>
                                 <div className="flex-1 text-left">
-                                    <h3 className="font-bold text-gray-900 text-[1.1rem] leading-tight mb-1.5 line-clamp-2 group-hover:text-brand-600 transition-colors duration-300">
+                                    <h3 className="font-display font-bold text-sm uppercase tracking-wider mb-1 group-hover:text-accent transition-colors duration-300 line-clamp-2">
                                         {uniName}
                                     </h3>
-                                    <div className="flex items-center gap-3 text-xs font-medium">
-                                        <span className="text-gray-500 bg-gray-50 px-2 py-0.5 rounded-full border border-gray-100/50">{location}</span>
-                                    </div>
+                                    <span className="text-[10px] text-white/30 uppercase tracking-widest">{location}</span>
                                 </div>
-                                {/* Subtle arrow indicator */}
-                                <div className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 text-brand-500">
+                                <div className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 text-accent">
                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                                     </svg>
                                 </div>
-                            </div>
+                            </motion.div>
                         );
                     })}
 
-                    {/* "And Many More" Card */}
                     {activeDestination.universityDetails && activeDestination.universityDetails.length > 10 && (
-                        <div
-                            style={{ animationDelay: `750ms` }}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.5 }}
                             onClick={() => {
                                 document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
                             }}
-                            className="animate-stagger bg-gradient-to-br from-brand-500 to-brand-600 rounded-2xl p-6 shadow-lg shadow-brand-500/20 border border-brand-400 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-brand-500/30 hover:-translate-y-1.5 transition-all duration-400 ease-out cursor-pointer relative overflow-hidden group"
+                            className="bg-accent rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
                         >
-                            <div className="absolute top-[-50%] right-[-50%] w-[100%] h-[100%] bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-                            <h3 className="font-extrabold text-white text-xl md:text-2xl mb-2 relative z-10 flex items-center gap-2">
+                            <h3 className="font-display font-bold text-bg text-xl uppercase mb-2 flex items-center gap-2">
                                 And Many More <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
                             </h3>
-                            <p className="text-brand-100 text-sm font-medium relative z-10">Contact us for the full list of partners.</p>
-                        </div>
+                            <p className="text-bg/70 text-sm">Contact us for the full list of partners.</p>
+                        </motion.div>
                     )}
                 </div>
             </div>

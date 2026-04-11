@@ -1,37 +1,57 @@
 import React from 'react';
+import { motion } from 'motion/react';
 
 export function CompanyStats() {
     return (
-        <section id="company" className="py-20 bg-[#060B17] relative z-20 border-y border-white/5 overflow-hidden">
-            {/* Deep glow effects */}
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.05]"></div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[50%] max-w-[1000px] bg-accent-500/10 blur-[150px] shadow-glow-brand rounded-[100%] pointer-events-none"></div>
+        <section id="company" className="py-32 px-4 relative overflow-hidden">
+            <div className="max-w-7xl mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: true }}
+                    className="grid grid-cols-1 md:grid-cols-2 gap-16 items-end"
+                >
+                    <div>
+                        <span className="text-accent text-[10px] font-bold uppercase tracking-[0.3em] mb-4 block">Why Choose Us</span>
+                        <h2 className="font-display text-5xl md:text-7xl font-bold uppercase leading-[0.9]">
+                            The Trusted<br />Pathway to<br />
+                            <span className="text-stroke italic font-serif">Global</span>{' '}
+                            <span className="text-accent">Education</span>
+                        </h2>
+                    </div>
+                    <p className="text-white/40 max-w-sm text-sm uppercase tracking-widest leading-loose">
+                        We are a digitally driven consultancy with a presence in Zimbabwe, Ghana, and India.
+                        Our mission is to empower ambitious students to achieve their educational objectives efficiently.
+                    </p>
+                </motion.div>
 
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    <div className="mb-10 lg:mb-0 animate-fade-in-up">
-                        <span className="text-accent-500 font-bold tracking-[0.2em] text-xs uppercase mb-3 block">Why Choose Us</span>
-                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">The Trusted Pathway to <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-gold-400">Global Education</span></h2>
-                        <p className="text-brand-100/70 max-w-lg leading-relaxed font-light text-lg">
-                            We are a digitally driven consultancy with a presence in **Zimbabwe, Ghana, and India**.
-                            Our mission is to empower ambitious students to achieve their educational objectives efficiently.
-                        </p>
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-6 lg:gap-8 text-center sm:text-left">
-                        {[
-                            { label: 'Visa Success Rate', val: '98%', color: 'text-white' },
-                            { label: 'Support System', val: '24/7', color: 'text-accent-400' },
-                            { label: 'Global Hubs', val: '3', color: 'text-white' },
-                            { label: 'Partner Institutions', val: '3000+', color: 'text-accent-400' }
-                        ].map((stat, i) => (
-                            <div key={i} className="relative group/stat p-6 rounded-3xl glass-dark border border-white/5 hover:border-accent-500/30 hover:bg-white/[0.03] transition-all duration-500 hover:-translate-y-1">
-                                <div className={`text-4xl md:text-5xl font-extrabold ${stat.color} mb-3 drop-shadow-lg`}>{stat.val}</div>
-                                <div className="text-xs text-brand-100/60 font-medium uppercase tracking-[0.15em]">{stat.label}</div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                <motion.div
+                    initial={{ opacity: 0, y: 60 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: true }}
+                    className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20"
+                >
+                    {[
+                        { label: 'Visa Success Rate', val: '98%' },
+                        { label: 'Support System', val: '24/7' },
+                        { label: 'Global Hubs', val: '3' },
+                        { label: 'Partner Institutions', val: '3000+' }
+                    ].map((stat, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                            viewport={{ once: true }}
+                            className="glass rounded-2xl p-8 group hover:bg-white/10 transition-colors duration-500"
+                        >
+                            <div className="font-display text-4xl md:text-5xl font-bold text-accent mb-3">{stat.val}</div>
+                            <div className="text-[10px] text-white/40 font-bold uppercase tracking-[0.2em]">{stat.label}</div>
+                        </motion.div>
+                    ))}
+                </motion.div>
             </div>
         </section>
     );
