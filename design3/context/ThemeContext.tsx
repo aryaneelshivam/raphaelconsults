@@ -23,6 +23,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('rc-theme', theme);
+        // Sync browser chrome theme colour
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#050505' : '#f4f1eb');
     }, [theme]);
 
     const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
