@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState, useMemo } from "react";
-import { Color, Scene, Fog, PerspectiveCamera, Vector3 } from "three";
+import { Color, Scene, Fog, PerspectiveCamera, Vector3, Group } from "three";
 import ThreeGlobe from "three-globe";
 import { useThree, Canvas, extend } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
@@ -65,7 +65,7 @@ let numbersOfRings = [0];
 
 export function Globe({ globeConfig, data }: WorldProps) {
   const globeRef = useRef<ThreeGlobe | null>(null);
-  const groupRef = useRef();
+  const groupRef = useRef<Group>(null);
   const [isInitialized, setIsInitialized] = useState(false);
 
   const defaultProps = {
@@ -89,7 +89,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
   useEffect(() => {
     if (!globeRef.current && groupRef.current) {
       globeRef.current = new ThreeGlobe();
-      (groupRef.current as any).add(globeRef.current);
+      groupRef.current.add(globeRef.current);
       setIsInitialized(true);
     }
   }, []);
@@ -100,16 +100,16 @@ export function Globe({ globeConfig, data }: WorldProps) {
 
     const isTransparent = globeConfig.globeColor === "transparent";
     globeRef.current.showGlobe(!isTransparent);
-    
+
     const globeMaterial = globeRef.current.globeMaterial() as unknown as {
       color: Color;
       emissive: Color;
       emissiveIntensity: number;
       shininess: number;
     };
-    
+
     if (!isTransparent) {
-        globeMaterial.color = new Color(globeConfig.globeColor || defaultProps.globeColor);
+      globeMaterial.color = new Color(globeConfig.globeColor || defaultProps.globeColor);
     }
     globeMaterial.emissive = new Color(globeConfig.emissive || defaultProps.emissive);
     globeMaterial.emissiveIntensity = globeConfig.emissiveIntensity || defaultProps.emissiveIntensity;
@@ -255,11 +255,11 @@ export function WebGLRendererConfig() {
 
 function SceneSetup({ cameraZ }: { cameraZ: number }) {
   const { camera, scene } = useThree();
-  
+
   useEffect(() => {
     camera.position.set(0, 0, cameraZ);
     camera.updateProjectionMatrix();
-    
+
     if (!scene.fog) {
       scene.fog = new Fog(0xffffff, 400, 2000);
     }
