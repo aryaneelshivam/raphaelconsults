@@ -199,15 +199,10 @@ export function Hero() {
                     />
                 </motion.div>
 
-                <div className="absolute top-1/2 right-0 h-[200%] aspect-square -translate-y-1/2 translate-x-1/2 hidden md:block">
+                <div className="absolute top-1/2 right-0 h-[200%] aspect-square -translate-y-1/2 translate-x-1/2">
                     <Suspense fallback={<GlobeFallback />}>
                         <LazyWorld data={sampleArcs} globeConfig={globeConfig} />
                     </Suspense>
-                </div>
-
-                {/* Mobile: show glow instead of heavy Globe */}
-                <div className="md:hidden absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[80vw] h-[80vw]">
-                    <div className="w-full h-full rounded-full bg-radial from-accent/15 via-transparent to-transparent opacity-60 blur-2xl" />
                 </div>
 
                 {/* Fallback Glow */}
